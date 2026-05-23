@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You, With Love 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF6F0;
+    --blush: #F2E4D8;
+    --dusty-rose: #D4A4A4;
+    --wine: #8C3D5A;
+    --deep: #3A1A2E;
+    --gold: #C9A96E;
+    --white: #FFFDF9;
+    --lily-yellow: #F5E6B0;
+    --lily-orange: #E8956D;
+    --leaf: #6B8C5A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'Josefin Sans', sans-serif;
+    color: var(--deep);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--wine); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, background 0.2s;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--dusty-rose); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s ease;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    text-align: center; padding: 2rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-80px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-tag {
+    font-size: 11px; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--dusty-rose); margin-bottom: 2rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 300; line-height: 0.95;
+    color: var(--deep); position: relative;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--wine);
+  }
+
+  .hero-sub {
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-top: 2.5rem;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--dusty-rose);
+    animation: fadeUp 1s ease 1.2s both, pulse 2s ease 2s infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; } 50% { opacity: 1; }
+  }
+
+  /* LILY DIVIDER */
+  .lily-divider {
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem 2rem; gap: 2rem;
+  }
+  .lily-divider::before, .lily-divider::after {
+    content: ''; flex: 1; max-width: 200px;
+    height: 1px; background: linear-gradient(to right, transparent, var(--dusty-rose));
+  }
+  .lily-divider::after {
+    background: linear-gradient(to left, transparent, var(--dusty-rose));
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative; padding: 6rem 2rem;
+    max-width: 960px; margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--dusty-rose); margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--deep); margin-bottom: 2rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--wine); }
+
+  .section-body {
+    font-size: 14px; letter-spacing: 1px; line-height: 2;
+    color: #6A4A56; max-width: 560px;
+  }
+
+  /* LILY GARDEN */
+  .lily-garden {
+    background: var(--white);
+    padding: 6rem 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .lily-grid {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 3rem; margin-top: 4rem; max-width: 900px; margin-inline: auto;
+  }
+
+  .lily-card {
+    width: 200px; text-align: center;
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .lily-card.visible { opacity: 1; transform: translateY(0); }
+
+  .lily-card svg {
+    width: 120px; height: 160px; margin: 0 auto;
+    display: block; filter: drop-shadow(0 8px 24px rgba(140,61,90,0.12));
+    transition: transform 0.5s ease;
+  }
+  .lily-card:hover svg { transform: scale(1.08) rotate(-2deg); }
+
+  .lily-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic;
+    color: var(--wine); margin-top: 1rem;
+  }
+
+  .lily-meaning {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--dusty-rose); margin-top: 0.3rem;
+  }
+
+  /* FASHION QUOTE */
+  .quote-section {
+    background: var(--deep);
+    padding: 7rem 2rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: '❝';
+    position: absolute; top: 2rem; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; color: var(--wine); opacity: 0.3;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300; font-style: italic;
+    color: var(--cream); max-width: 700px;
+    margin: 0 auto 2rem; line-height: 1.4;
+  }
+
+  .quote-attr {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--dusty-rose);
+  }
+
+  /* ATTRIBUTES */
+  .attrs {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px; background: var(--blush);
+    border: 1px solid var(--blush); overflow: hidden;
+    border-radius: 2px; margin-top: 4rem;
+  }
+
+  .attr-item {
+    background: var(--white); padding: 2.5rem 2rem;
+    text-align: center;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .attr-item.visible { opacity: 1; transform: translateY(0); }
+  .attr-item:hover { background: var(--blush); }
+
+  .attr-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300; color: var(--wine);
+    line-height: 1;
+  }
+
+  .attr-label {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--deep); margin-top: 0.8rem;
+  }
+
+  /* MESSAGE */
+  .message-section {
+    text-align: center; padding: 7rem 2rem;
+    background: var(--blush);
+  }
+
+  .message-inner {
+    max-width: 680px; margin: 0 auto;
+  }
+
+  .big-initial {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10rem; line-height: 0.8;
+    color: var(--wine); opacity: 0.12;
+    float: left; margin-right: -1rem;
+  }
+
+  .message-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-weight: 300; line-height: 1.8;
+    color: var(--deep); text-align: left;
+    padding-left: 5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .footer-lily {
+    margin: 0 auto 1.5rem;
+  }
+
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-style: italic;
+    color: var(--cream);
+  }
+
+  .footer-small {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--dusty-rose); margin-top: 1rem;
+  }
+
+  /* Floating lily animation */
+  .float-lily {
+    animation: floatLily 6s ease-in-out infinite;
+  }
+  @keyframes floatLily {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+
+  /* Timeline for fashion */
+  .fashion-timeline {
+    margin-top: 4rem; position: relative;
+    padding-left: 2rem;
+  }
+  .fashion-timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: var(--dusty-rose);
+  }
+  .timeline-item {
+    margin-bottom: 3rem; padding-left: 2rem; position: relative;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -5px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--wine); border: 2px solid var(--cream);
+  }
+  .timeline-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-style: italic; color: var(--wine);
+  }
+  .timeline-desc {
+    font-size: 12px; letter-spacing: 1px; line-height: 1.8;
+    color: #6A4A56; margin-top: 0.4rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .message-text { padding-left: 0; text-align: center; }
+    .big-initial { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg" id="petals"></div>
+  <p class="hero-tag">A page made just for you</p>
+  <h1 class="hero-title">
+    Blooming<br>
+    <em>in Style</em>
+  </h1>
+  <p class="hero-sub">For the woman who weaves beauty into everything she touches</p>
+  <p class="scroll-hint">↓ &nbsp; scroll to explore</p>
+</div>
+
+<!-- LILY GARDEN -->
+<div class="lily-garden">
+  <p class="section-label" style="text-align:center">Your favourite flower</p>
+  <h2 class="section-title" style="text-align:center">The Language of <em>Lilies</em></h2>
+  <p class="section-body" style="margin:0 auto; text-align:center">
+    Like you, lilies hold a rare duality — delicate in form, yet striking in presence. Each variety whispers something different, but all say the same thing: <em>extraordinary</em>.
+  </p>
+
+  <div class="lily-grid">
+    <!-- Stargazer Lily -->
+    <div class="lily-card">
+      <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <!-- Stem -->
+          <path d="M60 160 Q58 130 55 110" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <path d="M55 110 Q52 90 60 50" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <!-- Leaves -->
+          <path d="M56 120 Q40 110 32 115 Q44 108 56 112 Z" fill="#6B8C5A" opacity="0.8"/>
+          <path d="M57 95 Q75 85 82 88 Q70 84 58 92 Z" fill="#6B8C5A" opacity="0.8"/>
+          <!-- Petals -->
+          <ellipse cx="48" cy="38" rx="10" ry="26" fill="#D4688E" opacity="0.85" transform="rotate(-30 48 38)"/>
+          <ellipse cx="60" cy="30" rx="10" ry="26" fill="#C4507A" opacity="0.9" transform="rotate(0 60 30)"/>
+          <ellipse cx="72" cy="38" rx="10" ry="26" fill="#D4688E" opacity="0.85" transform="rotate(30 72 38)"/>
+          <ellipse cx="42" cy="52" rx="10" ry="24" fill="#B83C68" opacity="0.75" transform="rotate(-70 42 52)"/>
+          <ellipse cx="78" cy="52" rx="10" ry="24" fill="#B83C68" opacity="0.75" transform="rotate(70 78 52)"/>
+          <ellipse cx="60" cy="58" rx="10" ry="22" fill="#C04070" opacity="0.8" transform="rotate(180 60 58)"/>
+          <!-- Spots -->
+          <circle cx="55" cy="38" r="1.5" fill="#7A1840" opacity="0.5"/>
+          <circle cx="60" cy="32" r="2" fill="#7A1840" opacity="0.5"/>
+          <circle cx="65" cy="38" r="1.5" fill="#7A1840" opacity="0.5"/>
+          <!-- Stamens -->
+          <line x1="60" y1="44" x2="50" y2="32" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="50" cy="31" r="2.5" fill="#C9A96E"/>
+          <line x1="60" y1="44" x2="60" y2="28" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="60" cy="27" r="2.5" fill="#E8956D"/>
+          <line x1="60" y1="44" x2="70" y2="32" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="70" cy="31" r="2.5" fill="#C9A96E"/>
+          <!-- Center -->
+          <circle cx="60" cy="44" r="5" fill="#3A1A2E" opacity="0.7"/>
+        </g>
+      </svg>
+      <p class="lily-name">Stargazer</p>
+      <p class="lily-meaning">Ambition & Prosperity</p>
+    </div>
+
+    <!-- White Lily -->
+    <div class="lily-card" style="transition-delay: 0.15s">
+      <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <path d="M60 160 Q60 140 60 120" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <path d="M60 120 Q59 95 60 55" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <path d="M60 130 Q42 118 35 122 Q46 115 60 124 Z" fill="#6B8C5A" opacity="0.8"/>
+          <path d="M60 100 Q78 88 85 91 Q72 87 60 94 Z" fill="#6B8C5A" opacity="0.8"/>
+          <!-- White petals with cream/ivory -->
+          <ellipse cx="47" cy="38" rx="11" ry="27" fill="#FFF8F0" stroke="#E8D5C0" stroke-width="0.5" opacity="0.95" transform="rotate(-25 47 38)"/>
+          <ellipse cx="60" cy="28" rx="11" ry="27" fill="#FFFDF9" stroke="#E8D5C0" stroke-width="0.5" opacity="0.95"/>
+          <ellipse cx="73" cy="38" rx="11" ry="27" fill="#FFF8F0" stroke="#E8D5C0" stroke-width="0.5" opacity="0.95" transform="rotate(25 73 38)"/>
+          <ellipse cx="40" cy="53" rx="10" ry="24" fill="#FFF0E8" stroke="#E0C8B0" stroke-width="0.5" opacity="0.85" transform="rotate(-65 40 53)"/>
+          <ellipse cx="80" cy="53" rx="10" ry="24" fill="#FFF0E8" stroke="#E0C8B0" stroke-width="0.5" opacity="0.85" transform="rotate(65 80 53)"/>
+          <ellipse cx="60" cy="60" rx="10" ry="22" fill="#FFF5EC" stroke="#E0C8B0" stroke-width="0.5" opacity="0.85" transform="rotate(180 60 60)"/>
+          <!-- Veins -->
+          <path d="M60 46 L52 22" stroke="#E8D5C0" stroke-width="0.8" fill="none"/>
+          <path d="M60 46 L60 22" stroke="#E8D5C0" stroke-width="0.8" fill="none"/>
+          <!-- Stamens -->
+          <line x1="60" y1="46" x2="50" y2="32" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="50" cy="31" r="3" fill="#E8956D"/>
+          <line x1="60" y1="46" x2="60" y2="28" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="60" cy="27" r="3" fill="#C9A96E"/>
+          <line x1="60" y1="46" x2="70" y2="32" stroke="#C9A96E" stroke-width="1.2"/>
+          <circle cx="70" cy="31" r="3" fill="#E8956D"/>
+          <circle cx="60" cy="46" r="5" fill="#F5E6B0" opacity="0.9"/>
+        </g>
+      </svg>
+      <p class="lily-name">Casa Blanca</p>
+      <p class="lily-meaning">Purity & Elegance</p>
+    </div>
+
+    <!-- Tiger Lily -->
+    <div class="lily-card" style="transition-delay: 0.3s">
+      <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <path d="M60 160 Q62 135 64 115" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <path d="M64 115 Q63 90 60 50" stroke="#6B8C5A" stroke-width="2.5" fill="none"/>
+          <path d="M62 125 Q80 112 87 115 Q75 109 63 118 Z" fill="#6B8C5A" opacity="0.8"/>
+          <path d="M62 95 Q44 84 38 88 Q50 82 63 90 Z" fill="#6B8C5A" opacity="0.8"/>
+          <!-- Orange tiger lily petals curving back -->
+          <path d="M60 48 Q36 30 28 10 Q40 32 58 44 Z" fill="#E8956D" opacity="0.9"/>
+          <path d="M60 48 Q60 22 60 2 Q62 26 62 46 Z" fill="#D4783A" opacity="0.9"/>
+          <path d="M60 48 Q84 30 92 10 Q80 32 62 44 Z" fill="#E8956D" opacity="0.9"/>
+          <path d="M60 48 Q32 48 18 60 Q36 50 58 50 Z" fill="#CC6B2A" opacity="0.85"/>
+          <path d="M60 48 Q88 48 102 60 Q84 50 62 50 Z" fill="#CC6B2A" opacity="0.85"/>
+          <path d="M60 48 Q50 72 44 88 Q54 68 60 50 Z" fill="#E8956D" opacity="0.8"/>
+          <!-- Spots on petals -->
+          <circle cx="46" cy="30" r="2" fill="#7A2800" opacity="0.5"/>
+          <circle cx="42" cy="38" r="1.5" fill="#7A2800" opacity="0.5"/>
+          <circle cx="60" cy="22" r="2" fill="#7A2800" opacity="0.5"/>
+          <circle cx="74" cy="30" r="2" fill="#7A2800" opacity="0.5"/>
+          <circle cx="78" cy="38" r="1.5" fill="#7A2800" opacity="0.5"/>
+          <!-- Stamens — longer, drooping -->
+          <path d="M60 48 Q50 36 42 24" stroke="#8C3D5A" stroke-width="1.5" fill="none"/>
+          <circle cx="41" cy="23" r="3" fill="#C9A96E"/>
+          <path d="M60 48 Q60 34 58 20" stroke="#8C3D5A" stroke-width="1.5" fill="none"/>
+          <circle cx="58" cy="19" r="3" fill="#E8956D"/>
+          <path d="M60 48 Q70 36 78 24" stroke="#8C3D5A" stroke-width="1.5" fill="none"/>
+          <circle cx="79" cy="23" r="3" fill="#C9A96E"/>
+          <circle cx="60" cy="48" r="4" fill="#3A1A2E" opacity="0.6"/>
+        </g>
+      </svg>
+      <p class="lily-name">Tiger Lily</p>
+      <p class="lily-meaning">Confidence & Passion</p>
+    </div>
+  </div>
+</div>
+
+<!-- FASHION SECTION -->
+<div style="background: var(--cream);">
+  <section>
+    <p class="section-label">What you do</p>
+    <h2 class="section-title">Fashion is <em>Art</em><br>you can live in</h2>
+    <p class="section-body">
+      A fashion designer doesn't just make clothes — she architects moods, sculpts confidence, and gives form to things people can't yet name. Every stitch is a decision. Every silhouette, a sentence.
+    </p>
+
+    <div class="fashion-timeline">
+      <div class="timeline-item">
+        <p class="timeline-title">The sketch</p>
+        <p class="timeline-desc">Where a feeling becomes a line. Where imagination first meets paper. The quietest, most honest moment in design.</p>
+      </div>
+      <div class="timeline-item" style="transition-delay: 0.15s">
+        <p class="timeline-title">The fabric</p>
+        <p class="timeline-desc">Choosing texture is choosing emotion. Silk whispers. Linen breathes. Every material carries a memory.</p>
+      </div>
+      <div class="timeline-item" style="transition-delay: 0.3s">
+        <p class="timeline-title">The silhouette</p>
+        <p class="timeline-desc">The shape that walks into a room before the person does. Architecture in motion. Poetry in form.</p>
+      </div>
+      <div class="timeline-item" style="transition-delay: 0.45s">
+        <p class="timeline-title">The finish</p>
+        <p class="timeline-desc">Where precision meets magic. The last stitch that transforms cloth into something worn with pride.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- QUOTE SECTION -->
+<div class="quote-section">
+  <p class="quote-text">
+    "Fashion is the armour to survive the reality of everyday life."
+  </p>
+  <p class="quote-attr">— Bill Cunningham</p>
+</div>
+
+<!-- ATTRIBUTES -->
+<div style="background: var(--blush); padding: 6rem 2rem;">
+  <div style="max-width: 960px; margin: 0 auto; text-align: center;">
+    <p class="section-label">What I see in you</p>
+    <h2 class="section-title" style="text-align:center">A rare <em>combination</em></h2>
+    <div class="attrs">
+      <div class="attr-item">
+        <p class="attr-num">∞</p>
+        <p class="attr-label">Creative spirit</p>
+      </div>
+      <div class="attr-item" style="transition-delay: 0.1s">
+        <p class="attr-num">✦</p>
+        <p class="attr-label">Refined taste</p>
+      </div>
+      <div class="attr-item" style="transition-delay: 0.2s">
+        <p class="attr-num">❋</p>
+        <p class="attr-label">Like lilies: grace</p>
+      </div>
+      <div class="attr-item" style="transition-delay: 0.3s">
+        <p class="attr-num">◈</p>
+        <p class="attr-label">Rare elegance</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MESSAGE -->
+<div class="message-section">
+  <div class="message-inner">
+    <p class="section-label" style="text-align:center">A note</p>
+    <h2 class="section-title" style="text-align:center">From <em>me, to you</em></h2>
+    <div style="margin-top: 2.5rem; position: relative;">
+      <p class="big-initial">❝</p>
+      <p class="message-text">
+        You design the world around you with the same care you give to every detail of your work —
+        thoughtfully, beautifully, and entirely your own way.
+        <br><br>
+        Just as a lily blooms without apology, you move through life with a quiet, striking certainty.
+        I am so glad our paths crossed.
+        <br><br>
+        This page is small, but the feeling behind it is anything but.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <svg class="footer-lily float-lily" width="50" height="70" viewBox="0 0 50 70" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 70 Q24 55 23 45" stroke="#6B8C5A" stroke-width="1.5" fill="none"/>
+    <path d="M23 45 Q22 35 25 20" stroke="#6B8C5A" stroke-width="1.5" fill="none"/>
+    <ellipse cx="20" cy="16" rx="5" ry="14" fill="#D4688E" opacity="0.8" transform="rotate(-25 20 16)"/>
+    <ellipse cx="25" cy="12" rx="5" ry="14" fill="#C4507A" opacity="0.9"/>
+    <ellipse cx="30" cy="16" rx="5" ry="14" fill="#D4688E" opacity="0.8" transform="rotate(25 30 16)"/>
+    <circle cx="25" cy="20" r="3" fill="#C9A96E" opacity="0.8"/>
+  </svg>
+  <p class="footer-text">With love & lilies</p>
+  <p class="footer-small">Made for you &nbsp;·&nbsp; with care &nbsp;·&nbsp; always</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Falling petals
+  const petalContainer = document.getElementById('petals');
+  const petalShapes = [
+    `<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="15" rx="6" ry="12" fill="COLOR" opacity="0.6"/></svg>`,
+    `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="10" ry="5" fill="COLOR" opacity="0.5" transform="rotate(30 12 12)"/></svg>`,
+  ];
+  const colors = ['#D4A4A4','#C9A96E','#D4688E','#E8956D','#F2E4D8'];
+
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    const shape = petalShapes[Math.floor(Math.random() * petalShapes.length)].replace('COLOR', c);
+    el.innerHTML = shape;
+    const size = 12 + Math.random() * 20;
+    el.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${size}px; height: ${size}px;
+      animation-duration: ${6 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 8}s;
+    `;
+    petalContainer.appendChild(el);
+  }
+
+  // Intersection observer for scroll reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.lily-card, .attr-item, .timeline-item').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

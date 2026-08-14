@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "QuickCalcLead": {
+      "title": "Quick Calc Lead",
+      "description": "Information submitted by users to download the quick calculation models",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Full name of the user"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 100,
+          "description": "Email address of the user"
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 15,
+          "description": "Phone number of the user"
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 string of when the lead was submitted"
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Source identifier of the lead form"
+        },
+        "calculations": {
+          "type": "object",
+          "description": "Calculations state of the user at the time of submission"
+        }
+      },
+      "required": ["name", "email", "phone", "submittedAt", "source", "calculations"]
+    }
+  },
+  "firestore": {
+    "/quick_calc_leads/{leadId}": {
+      "schema": "QuickCalcLead",
+      "description": "A collection of quick calculation leads submitted by visitors"
+    }
+  }
+}
